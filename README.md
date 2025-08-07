@@ -28,6 +28,8 @@ This creates a baseline monitoring report using the original dataset as both ref
 - `baseline.html` - Evidently monitoring report
 - `baseline_metrics.json` - Performance metrics
 
+**Note:** Due to file size limitations, HTML reports need to be downloaded and opened locally in your browser.
+
 #### 2. Test Data Drift
 
 ```bash
@@ -61,3 +63,16 @@ The monitoring system successfully detects significant performance degradation:
 - Data quality analysis
 - Target drift monitoring
 - Classification performance tracking
+
+## How to View HTML Reports
+
+### Method 1: Download and Open Locally
+1. Download the HTML files from the repository
+2. Open them in your web browser locally
+
+### Method 2: GitHub Pages (Recommended)
+Visit the live reports at: [GitHub Pages Site](https://yijiasong1002-uchi.github.io/MLOps-Final-Project/)
+
+### Method 3: Alternative Hosting
+- Upload to any static hosting service (Netlify, Vercel, etc.)
+- Use online HTML viewers like htmlpreview.github.io

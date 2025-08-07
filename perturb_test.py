@@ -1,10 +1,6 @@
 #!/usr/bin/env python3
 """
-Data Perturbation Tester - perturb_test.py
-Features:
-1. Modify specified columns (alcohol and volatile acidity)
-2. Call monitor.py to generate drift reports
-3. Output accuracy comparison results
+Data perturbation tester for ML drift detection
 """
 
 import pandas as pd
@@ -18,24 +14,14 @@ import sys
 from monitor import EvidentiallyMonitor
 
 def perturb_data(data, modifications=None):
-    """
-    Perturb data - Modify specified columns
-    
-    Args:
-        data: Original data
-        modifications: Modification rules dictionary {'column': value_change}
-    
-    Returns:
-        Perturbed data and modification records
-    """
     if modifications is None:
         modifications = {
             'alcohol': -1.2,
             'volatile acidity': 0.1
         }
     
-    print(f"🎯 Starting data perturbation:")
-    print(f"   Modification rules: {modifications}")
+    print(f"Starting data perturbation:")
+    print(f"Modification rules: {modifications}")
     
     perturbed_data = data.copy()
     applied_changes = {}
@@ -52,21 +38,17 @@ def perturb_data(data, modifications=None):
                 'new_mean': float(new_mean)
             }
             
-            print(f"   ✏️  {column}: {original_mean:.3f} → {new_mean:.3f} (change: {change:+.1f})")
+            print(f"{column}: {original_mean:.3f} → {new_mean:.3f} (change: {change:+.1f})")
         else:
-            print(f"   ❌ Column '{column}' does not exist, skipping modification")
+            print(f"Column '{column}' does not exist, skipping modification")
     
     return perturbed_data, applied_changes
 
 def save_results(original_data, perturbed_data, comparison_results, applied_changes, output_dir):
-    """Save results to files"""
-    
-    # Save perturbed data
     perturbed_data_path = f"{output_dir}/perturbed_data.csv"
     perturbed_data.to_csv(perturbed_data_path, index=False)
-    print(f"💾 Perturbed data saved: {perturbed_data_path}")
+    print(f"Perturbed data saved: {perturbed_data_path}")
     
-    # Save complete comparison results
     complete_results = {
         'timestamp': datetime.now().isoformat(),
         'data_info': {
@@ -82,7 +64,7 @@ def save_results(original_data, perturbed_data, comparison_results, applied_chan
     with open(results_path, 'w', encoding='utf-8') as f:
         json.dump(complete_results, f, indent=2, ensure_ascii=False)
     
-    print(f"💾 Complete results saved: {results_path}")
+    print(f"Complete results saved: {results_path}")
     
     return results_path
 
@@ -99,28 +81,24 @@ def main():
         'volatile acidity': 0.1
     }
     
-    print("🚀 Starting data perturbation test")
+    print("Starting data perturbation test")
     print("=" * 50)
     
     # Load original data
-    print(f"📂 Loading original data: {DATA_PATH}")
+    print(f"Loading original data: {DATA_PATH}")
     original_data = pd.read_csv(DATA_PATH)
     original_data = original_data.dropna()
-    print(f"✅ Original data loaded successfully, shape: {original_data.shape}")
+    print(f"Original data loaded successfully, shape: {original_data.shape}")
     
-    # Execute data perturbation
     perturbed_data, applied_changes = perturb_data(original_data, PERTURBATIONS)
     
-    # Create monitor
     monitor = EvidentiallyMonitor(output_dir=OUTPUT_DIR)
     
-    # Load model
     if not monitor.load_h2o_model(MODEL_PATH):
-        print("❌ Model loading failed, exiting")
+        print("Model loading failed, exiting")
         return None
     
-    # Generate drift detection report
-    print(f"\n🔄 Generating drift detection report...")
+    print(f"\nGenerating drift detection report...")
     drift_html, comparison_results = monitor.generate_drift_report(
         reference_data=original_data,
         current_data=perturbed_data,
@@ -138,10 +116,10 @@ def main():
         )
         
         # Output final summary
-        print(f"\n🎯 Perturbation test summary:")
+        print(f"\nPerturbation test summary:")
         print("=" * 50)
-        print(f"✅ Drift report: {drift_html}")
-        print(f"✅ Results file: {results_path}")
+        print(f"Drift report: {drift_html}")
+        print(f"Results file: {results_path}")
         
         # Output key metrics
         baseline_acc = comparison_results['baseline_metrics']['accuracy']
@@ -149,18 +127,18 @@ def main():
         acc_change = comparison_results['changes']['accuracy_change_percent']
         f1_change = comparison_results['changes']['f1_change_percent']
         
-        print(f"\n📊 Key performance metrics:")
-        print(f"   📈 Pre-perturbation accuracy: {baseline_acc:.4f} ({baseline_acc*100:.2f}%)")
-        print(f"   📈 Post-perturbation accuracy: {drift_acc:.4f} ({drift_acc*100:.2f}%)")
-        print(f"   📈 Accuracy change: {acc_change:+.2f}%")
-        print(f"   📈 F1 score change: {f1_change:+.2f}%")
+        print(f"\nKey performance metrics:")
+        print(f"Pre-perturbation accuracy: {baseline_acc:.4f} ({baseline_acc*100:.2f}%)")
+        print(f"Post-perturbation accuracy: {drift_acc:.4f} ({drift_acc*100:.2f}%)")
+        print(f"Accuracy change: {acc_change:+.2f}%")
+        print(f"F1 score change: {f1_change:+.2f}%")
         
         if acc_change < -10:
-            print(f"   ⚠️  Severe performance degradation detected!")
+            print(f"Severe performance degradation detected!")
         elif acc_change < -5:
-            print(f"   ⚠️  Significant performance degradation detected!")
+            print(f"Significant performance degradation detected!")
         else:
-            print(f"   ✅ Performance impact within acceptable range")
+            print(f"Performance impact within acceptable range")
     
     return drift_html, comparison_results
 

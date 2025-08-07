@@ -71,9 +71,9 @@ def save_results(original_data, perturbed_data, comparison_results, applied_chan
 def main():
     """Main function - Execute perturbation test"""
     # Configuration parameters
-    DATA_PATH = "/Users/ashley/Downloads/data/validation_data_complete.csv"
-    MODEL_PATH = "/Users/ashley/Downloads/Data/StackedEnsemble_BestOfFamily_2_AutoML_1_20250806_231050"
-    OUTPUT_DIR = "/Users/ashley/Desktop/evidently_reports"
+    DATA_PATH = "/content/data/validation_data_complete.csv"
+    MODEL_PATH = "/content/data/StackedEnsemble_BestOfFamily_2_AutoML_1_20250806_231050"
+    OUTPUT_DIR = "/content/data"
     
     # Perturbation configuration
     PERTURBATIONS = {

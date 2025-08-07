@@ -1,10 +1,6 @@
 # MLOps-Final-Project
 
-## ML Monitoring with H2O AutoML and Evidently
-
-### Overview
-
-This project implements ML model monitoring using H2O AutoML and Evidently for wine quality prediction. The workflow detects data drift and tracks model performance degradation.
+## ML Monitoring with Evidently
 
 ### Files
 

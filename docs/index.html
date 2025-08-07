@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Monitoring Reports</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .report-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            background-color: #f9f9f9;
+        }
+        .report-link {
+            display: inline-block;
+            background-color: #007cba;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .report-link:hover {
+            background-color: #005a8b;
+        }
+    </style>
+</head>
+<body>
+    <h1>ML Monitoring Reports</h1>
+    <p>Wine Quality Dataset - H2O AutoML + Evidently Monitoring</p>
+    
+    <div class="report-card">
+        <h2>Baseline Report</h2>
+        <p>Initial monitoring report using the original dataset as both reference and current data.</p>
+        <p><strong>Baseline Accuracy:</strong> 68.40%</p>
+        <a href="baseline.html" class="report-link">View Baseline Report</a>
+    </div>
+    
+    <div class="report-card">
+        <h2>Data Drift Report</h2>
+        <p>Drift detection report after modifying alcohol (-1.2) and volatile acidity (+0.1) features.</p>
+        <p><strong>After Drift Accuracy:</strong> 49.92%</p>
+        <p><strong>Performance Drop:</strong> -18.48%</p>
+        <a href="drift-after.html" class="report-link">View Drift Report</a>
+    </div>
+    
+    <div class="report-card">
+        <h2>Project Repository</h2>
+        <p>View the complete source code and monitoring scripts.</p>
+        <a href="https://github.com/yijiasong1002-uchi/MLOps-Final-Project" class="report-link">GitHub Repository</a>
+    </div>
+</body>
+</html>
